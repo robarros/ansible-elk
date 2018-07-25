@@ -36,3 +36,5 @@
   service:
    name: kibana
    state: started
+   enabled: true
+

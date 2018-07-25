@@ -16,3 +16,4 @@
   service:
    name: filebeat
    state: started
+   enabled: true
