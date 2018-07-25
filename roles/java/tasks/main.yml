@@ -3,13 +3,6 @@
 # Installing Java 8
 #
 
-# update system
-
-- name: update system
-  apt:
-    update_cache: yes
-
-
 # Add the Java repo
 
 - name: Add the Java PPA repo
