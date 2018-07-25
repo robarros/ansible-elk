@@ -1,0 +1,2 @@
+[elkservers]
+10.0.0.222   ansible_python_interpreter=/usr/bin/python3
