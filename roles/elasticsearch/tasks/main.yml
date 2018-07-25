@@ -3,6 +3,29 @@
 # Installing Elasticsearch
 #
 
+# update system
+
+- name: update system
+  apt:
+    update_cache: yes
+    cache_valid_time: 3600
+
+# install ntp service
+
+- name: Install the package "chrony"
+  apt:
+    name: chrony
+    state: present
+
+# Start chrony service
+
+- name: Starting chrony
+  service:
+   name: chrony
+   state: started
+   enabled: true
+
+
 # Add Elasticsearch apt key
 
 - name: Add Elasticsearch apt key
