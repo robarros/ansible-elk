@@ -10,7 +10,7 @@
    url: "https://packages.elastic.co/GPG-KEY-elasticsearch"
    state: present
 
-# Add the Elasticsearch apt repo.
+# Add the Elasticsearch apt repo
 
 - name: Adding Elasticsearch repo
   apt_repository:
@@ -25,9 +25,9 @@
   apt:
    name: filebeat
 
-# copy template confi filebeat
+# Copy template confing filebeat
 
-- name: copy file configuration
+- name: Copy file configuration
   template:
     src: filebeat.j2
     dest: /etc/filebeat/filebeat.yml
@@ -37,7 +37,7 @@
   notify:
     - restart filebeat
 
-# Starting Filebeat
+# Starting Service Filebeat
 
 - name: Starting Filebeat
   service:

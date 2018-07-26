@@ -3,14 +3,41 @@
 # Installing Metricbeat
 #
 
+# Add Elasticsearch apt key
+
+- name: Add Elasticsearch apt key
+  apt_key:
+   url: "https://packages.elastic.co/GPG-KEY-elasticsearch"
+   state: present
+
+# Add the Elasticsearch apt repo
+
+- name: Adding Elasticsearch repo
+  apt_repository:
+   repo: deb https://artifacts.elastic.co/packages/6.x/apt stable main
+   state: present
+   update_cache: yes
+
+
 # Install Metricbeat 
 
 - name: Install Metricbeat with apt
   apt:
    name: metricbeat
-   update_cache: yes
-    
-# Starting Metricbeat
+
+# Copy template confing metricbeat 
+
+- name: Copy file configuration
+  template:
+    src: metricbeat.j2
+    dest: /etc/metricbeat/metricbeat.yml
+    owner: root
+    group: root
+    mode: '0600'
+  notify:
+    - restart metricbeat
+
+# Starting Service Metricbeat
 
 - name: Starting Metricbeat
   service:
