@@ -25,7 +25,7 @@
   apt:
    name: filebeat
 
-# Copy template confing filebeat
+# Copy template config filebeat
 
 - name: Copy file configuration
   template:

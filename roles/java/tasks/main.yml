@@ -7,8 +7,9 @@
 
 - name: Add the Java PPA repo
   apt_repository: 
-   repo: ppa:webupd8team/java
-  update_cache: yes
+    repo: ppa:webupd8team/java
+    state: present
+    update_cache: yes
 
 # Accept Oracle license
 
@@ -21,4 +22,3 @@
   apt:
    name: oracle-java8-installer
    state: present
-   update_cache: yes

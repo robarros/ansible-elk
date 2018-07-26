@@ -25,7 +25,7 @@
   apt:
    name: auditbeat
 
-# Copy template confing Auditbeat 
+# Copy template config Auditbeat 
 
 - name: Copy file configuration
   template:

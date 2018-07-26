@@ -5,7 +5,7 @@
 
 # install ntp service
 
-- name: Install the package "chrony"
+- name: Install the package ntp chrony
   apt:
     name: chrony
     state: present
@@ -39,7 +39,7 @@
 - name: Install Elasticsearch
   apt:
    name: elasticsearch
-   update_cache: yes
+   
    
 # Update Elasticsearch config file to allow access (to secure Elasticsearch, bind to 'localhost'). 
 

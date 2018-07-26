@@ -1,0 +1,5 @@
+---
+
+- name: restart heartbeat
+  systemd: name=heartbeat-elastic state=restarted
+        

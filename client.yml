@@ -7,8 +7,9 @@
   become: yes
   become_user: root
   roles:
-#  - { role: metricbeat }
-#  - { role: filebeat }
-#  - { role: packetbeat }
-  - { role: auditbeat }
+   - auditbeat
+   - filebeat
+   - heartbeat
+   - metricbeat
+   - packetbeat
 
