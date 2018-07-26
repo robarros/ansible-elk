@@ -166,6 +166,7 @@ setup.kibana:
 output.elasticsearch:
   # Array of hosts to connect to.
   hosts: ["{{ elasticsearch }}:9200"]
+  pipeline: geoip-info
 
   # Optional protocol and basic auth credentials.
   #protocol: "https"

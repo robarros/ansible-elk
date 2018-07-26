@@ -75,7 +75,7 @@
 # Enable Plugin GeoIP
 
 - name: Enable Plugin GeoIP Elasticsearch
-  command: bin/elasticsearch-plugin install ingest-geoip -s -b 
+  shell: bin/elasticsearch-plugin install ingest-geoip -s -b 
   args:
     chdir: /usr/share/elasticsearch/
   when: geoip_installed.stat.exists == false
