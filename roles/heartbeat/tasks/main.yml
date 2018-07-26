@@ -18,12 +18,19 @@
    state: present
    update_cache: yes
 
+# Install transport-https
+
+- name: Install transport-https
+  apt:
+   name: apt-transport-https
+   state: present
 
 # Install Heartbeat
 
 - name: Install Heartbeat with apt
   apt:
    name: heartbeat-elastic
+   state: present
 
 # Copy template config heartbeat
 

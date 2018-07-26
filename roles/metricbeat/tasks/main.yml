@@ -18,12 +18,19 @@
    state: present
    update_cache: yes
 
+# Install transport-https
+
+- name: Install transport-https
+  apt:
+   name: apt-transport-https
+   state: present
 
 # Install Metricbeat 
 
 - name: Install Metricbeat with apt
   apt:
    name: metricbeat
+   state: present
 
 # Copy template config metricbeat 
 

@@ -18,19 +18,27 @@
    state: present
    update_cache: yes
 
+# Install transport-https
+
+- name: Install transport-https
+  apt:
+   name: apt-transport-https
+   state: present
+
 
 # Install Auditbeat 
 
 - name: Install Auditbeat with apt
   apt:
    name: auditbeat
+   state: present
 
 # Copy template config Auditbeat 
 
 - name: Copy file configuration
   template:
     src: auditbeat.j2
-    dest: /etc/packetbeat/auditbeat.yml
+    dest: /etc/auditbeat/auditbeat.yml
     owner: root
     group: root
     mode: '0600'

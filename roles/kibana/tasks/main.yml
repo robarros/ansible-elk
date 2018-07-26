@@ -8,6 +8,7 @@
 - name: Install Kibana with apt
   apt:
     name: kibana
+    state: present
     update_cache: yes
  
 # Configurations

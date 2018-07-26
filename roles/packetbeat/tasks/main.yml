@@ -18,12 +18,19 @@
    state: present
    update_cache: yes
 
+# Install transport-https
+
+- name: Install transport-https
+  apt:
+   name: apt-transport-https
+   state: present
 
 # Install Packetbeat
 
 - name: Install Packetbeat with apt
   apt:
    name: packetbeat
+   state: present
 
 # Copy template config packetbeat
 
