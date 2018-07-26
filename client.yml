@@ -7,6 +7,6 @@
   become: yes
   become_user: root
   roles:
-#  - { role: metricbeat }
-  - { role: filebeat }
+  - { role: metricbeat }
+#  - { role: filebeat }
 
