@@ -7,8 +7,8 @@
 
 - name: Install Kibana with apt
   apt:
-   name: kibana
-   update_cache: yes
+    name: kibana
+    update_cache: yes
  
 # Configurations
 
@@ -34,6 +34,6 @@
 
 - name: Starting Kibana
   service:
-   name: kibana
-   state: started
-   enabled: true
+    name: kibana
+    state: started
+    enabled: true
