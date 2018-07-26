@@ -1,1 +1,47 @@
 ---
+#
+# Installing Packetbeat
+#
+
+# Add Elasticsearch apt key
+
+- name: Add Elasticsearch apt key
+  apt_key:
+   url: "https://packages.elastic.co/GPG-KEY-elasticsearch"
+   state: present
+
+# Add the Elasticsearch apt repo
+
+- name: Adding Elasticsearch repo
+  apt_repository:
+   repo: deb https://artifacts.elastic.co/packages/6.x/apt stable main
+   state: present
+   update_cache: yes
+
+
+# Install Packetbeat
+
+- name: Install Packetbeat with apt
+  apt:
+   name: packetbeat
+
+# Copy template confing packetbeat
+
+- name: Copy file configuration
+  template:
+    src: packetbeat.j2
+    dest: /etc/packetbeat/packetbeat.yml
+    owner: root
+    group: root
+    mode: '0600'
+  notify:
+    - restart packetbeat
+
+# Starting Service Packetbeat
+
+- name: Starting Packetbeat
+  service:
+   name: packetbeat
+   state: started
+   enabled: true
+
