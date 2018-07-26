@@ -58,9 +58,25 @@
    line: 'http.port: 9200'
  
 # Start Elasticsearch
+
 - name: Starting Elasticsearch
   service:
    name: elasticsearch
    state: started
    enabled: true
-    
+
+# Check if plugin geoip installed
+
+- name: Check Geoip Installed
+  stat:
+    path: /usr/share/elasticsearch/plugins/ingest-geoip
+  register: geoip_installed
+
+# Enable Plugin GeoIP
+
+- name: Enable Plugin GeoIP Elasticsearch
+  command: bin/elasticsearch-plugin install ingest-geoip -s -b 
+  args:
+    chdir: /usr/share/elasticsearch/
+  when: geoip_installed.stat.exists == false
+

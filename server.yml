@@ -5,6 +5,7 @@
 - hosts: elkserver
   remote_user: root
   become: yes
+  become_method: enable
   become_user: root
   roles:
     - java
