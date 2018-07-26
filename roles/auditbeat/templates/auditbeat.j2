@@ -1,105 +1,53 @@
-#################### Packetbeat Configuration Example #########################
+###################### Auditbeat Configuration Example #########################
 
-# This file is an example configuration file highlighting only the most common
-# options. The packetbeat.reference.yml file from the same directory contains all the
-# supported options with more comments. You can use it as a reference.
+# This is an example configuration file highlighting only the most common
+# options. The auditbeat.reference.yml file from the same directory contains all
+# the supported options with more comments. You can use it as a reference.
 #
 # You can find the full configuration reference here:
-# https://www.elastic.co/guide/en/beats/packetbeat/index.html
+# https://www.elastic.co/guide/en/beats/auditbeat/index.html
 
-#============================== Network device ================================
+#==========================  Modules configuration =============================
+auditbeat.modules:
 
-# Select the network interface to sniff the data. On Linux, you can use the
-# "any" keyword to sniff on all connected interfaces.
-packetbeat.interfaces.device: any
+- module: auditd
+  audit_rules: |
+    ## Define audit rules here.
+    ## Create file watches (-w) or syscall audits (-a or -A). Uncomment these
+    ## examples or add your own rules.
 
-#================================== Flows =====================================
+    ## If you are on a 64 bit platform, everything should be running
+    ## in 64 bit mode. This rule will detect any use of the 32 bit syscalls
+    ## because this might be a sign of someone exploiting a hole in the 32
+    ## bit API.
+    #-a always,exit -F arch=b32 -S all -F key=32bit-abi
 
-# Set `enabled: false` or comment out all options to disable flows reporting.
-packetbeat.flows:
-  # Set network flow timeout. Flow is killed if no packet is received before being
-  # timed out.
-  timeout: 30s
+    ## Executions.
+    #-a always,exit -F arch=b64 -S execve,execveat -k exec
 
-  # Configure reporting period. If set to -1, only killed flows will be reported
-  period: 10s
+    ## External access (warning: these can be expensive to audit).
+    #-a always,exit -F arch=b64 -S accept,bind,connect -F key=external-access
 
-#========================== Transaction protocols =============================
+    ## Identity changes.
+    #-w /etc/group -p wa -k identity
+    #-w /etc/passwd -p wa -k identity
+    #-w /etc/gshadow -p wa -k identity
 
-packetbeat.protocols:
-- type: icmp
-  # Enable ICMPv4 and ICMPv6 monitoring. Default: false
-  enabled: true
+    ## Unauthorized access attempts.
+    #-a always,exit -F arch=b64 -S open,creat,truncate,ftruncate,openat,open_by_handle_at -F exit=-EACCES -k access
+    #-a always,exit -F arch=b64 -S open,creat,truncate,ftruncate,openat,open_by_handle_at -F exit=-EPERM -k access
 
-- type: amqp
-  # Configure the ports where to listen for AMQP traffic. You can disable
-  # the AMQP protocol by commenting out the list of ports.
-  ports: [5672]
+- module: file_integrity
+  paths:
+  - /bin
+  - /usr/bin
+  - /sbin
+  - /usr/sbin
+  - /etc
 
-- type: cassandra
-  #Cassandra port for traffic monitoring.
-  ports: [9042]
 
-- type: dns
-  # Configure the ports where to listen for DNS traffic. You can disable
-  # the DNS protocol by commenting out the list of ports.
-  ports: [53]
-
-  # include_authorities controls whether or not the dns.authorities field
-  # (authority resource records) is added to messages.
-  include_authorities: true
-
-  # include_additionals controls whether or not the dns.additionals field
-  # (additional resource records) is added to messages.
-  include_additionals: true
-
-- type: http
-  # Configure the ports where to listen for HTTP traffic. You can disable
-  # the HTTP protocol by commenting out the list of ports.
-  ports: [80, 8080, 8000, 5000, 8002]
-
-- type: memcache
-  # Configure the ports where to listen for memcache traffic. You can disable
-  # the Memcache protocol by commenting out the list of ports.
-  ports: [11211]
-
-- type: mysql
-  # Configure the ports where to listen for MySQL traffic. You can disable
-  # the MySQL protocol by commenting out the list of ports.
-  ports: [3306]
-
-- type: pgsql
-  # Configure the ports where to listen for Pgsql traffic. You can disable
-  # the Pgsql protocol by commenting out the list of ports.
-  ports: [5432]
-
-- type: redis
-  # Configure the ports where to listen for Redis traffic. You can disable
-  # the Redis protocol by commenting out the list of ports.
-  ports: [6379]
-
-- type: thrift
-  # Configure the ports where to listen for Thrift-RPC traffic. You can disable
-  # the Thrift-RPC protocol by commenting out the list of ports.
-  ports: [9090]
-
-- type: mongodb
-  # Configure the ports where to listen for MongoDB traffic. You can disable
-  # the MongoDB protocol by commenting out the list of ports.
-  ports: [27017]
-
-- type: nfs
-  # Configure the ports where to listen for NFS traffic. You can disable
-  # the NFS protocol by commenting out the list of ports.
-  ports: [2049]
-
-- type: tls
-  # Configure the ports where to listen for TLS traffic. You can disable
-  # the TLS protocol by commenting out the list of ports.
-  ports: [443]
 
 #==================== Elasticsearch template setting ==========================
-
 setup.template.settings:
   index.number_of_shards: 3
   #index.codec: best_compression
@@ -147,7 +95,7 @@ setup.kibana:
 
 #============================= Elastic Cloud ==================================
 
-# These settings simplify using packetbeat with the Elastic Cloud (https://cloud.elastic.co/).
+# These settings simplify using beatname with the Elastic Cloud (https://cloud.elastic.co/).
 
 # The cloud.id setting overwrites the `output.elasticsearch.hosts` and
 # `setup.kibana.host` options.
@@ -199,7 +147,7 @@ output.elasticsearch:
 #logging.selectors: ["*"]
 
 #============================== Xpack Monitoring ===============================
-# packetbeat can export internal metrics to a central Elasticsearch monitoring
+# beatname can export internal metrics to a central Elasticsearch monitoring
 # cluster.  This requires xpack monitoring to be enabled in Elasticsearch.  The
 # reporting is disabled by default.
 

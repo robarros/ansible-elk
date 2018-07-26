@@ -9,5 +9,6 @@
   roles:
 #  - { role: metricbeat }
 #  - { role: filebeat }
-  - { role: packetbeat }
+#  - { role: packetbeat }
+  - { role: auditbeat }
 
