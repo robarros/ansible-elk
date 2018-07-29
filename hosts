@@ -2,5 +2,5 @@
 10.0.0.222  ansible_python_interpreter=/usr/bin/python3  ansible_connection=ssh
 
 [elkclient]
-10.0.0.224  ansible_python_interpreter=/usr/bin/python3  ansible_connection=ssh
 10.0.0.223  ansible_python_interpreter=/usr/bin/python3  ansible_connection=ssh
+10.0.0.224  ansible_python_interpreter=/usr/bin/python3  ansible_connection=ssh
